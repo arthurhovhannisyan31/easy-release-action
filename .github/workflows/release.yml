@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: easy-release
-        uses: arthurhovhannisyan31/easy-release-action@v0.0.1
+        uses: arthurhovhannisyan31/easy-release-action@v0.0.2
         with:
           source-branch: ${{ inputs.source-branch }}
           target-branch: ${{ inputs.target-branch }}
