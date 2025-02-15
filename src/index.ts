@@ -39,34 +39,37 @@ try {
   // validate provided version
   // check if provided version is not at latest tag
 
-  const latestRelease = octokit.rest.repos.getLatestRelease({
-    owner: OWNER,
-    repo: REPO
-  });
-
-  console.log({
-    latestRelease
-  });
-
-  // const {
-  //   data: mainBranch
-  // } = await octokit.rest.repos.getBranch({
+  // fails
+  // const latestRelease = octokit.rest.repos.getLatestRelease({
   //   owner: OWNER,
-  //   repo: REPO,
-  //   branch: "main"
-  // });
-  // const {
-  //   data: devBranch
-  // } = await octokit.rest.repos.getBranch({
-  //   owner: OWNER,
-  //   repo: REPO,
-  //   branch: "develop"
+  //   repo: REPO
   // });
   //
   // console.log({
-  //   mainBranch,
-  //   devBranch
+  //   latestRelease
   // });
+
+  /* check if sb exists */
+  /* check if tb exists */
+  const {
+    data: mainBranch
+  } = await octokit.rest.repos.getBranch({
+    owner: OWNER,
+    repo: REPO,
+    branch: "main" // try fake branch name
+  });
+  const {
+    data: devBranch
+  } = await octokit.rest.repos.getBranch({
+    owner: OWNER,
+    repo: REPO,
+    branch: "develop"
+  });
+
+  console.log({
+    mainBranch,
+    devBranch
+  });
   // get tag for a commit sha
 } catch (error: unknown) {
   core.setFailed((error as Error).message);
