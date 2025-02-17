@@ -54,7 +54,7 @@ try {
   } = await octokit.rest.repos.getBranch({
     owner: OWNER,
     repo: REPO,
-    branch: targetBranch // TODO try fake branch name
+    branch: "targetBranch" // TODO try fake branch name
   });
   /* check if source-branch exists */
   const {
