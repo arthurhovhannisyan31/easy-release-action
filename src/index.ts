@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import * as exec from "@actions/exec";
 import * as github from "@actions/github";
 import {
   coerce,
@@ -83,6 +84,7 @@ try {
   /* Merge validation */
   if (compareCommitsResponse.data.status !== "behind") {
     core.setFailed(`${targetBranch} branch is not behind ${sourceBranch}`);
+    await exec.exec("bash", ["exit", "1"]);
   }
 
   console.log("should exit");
