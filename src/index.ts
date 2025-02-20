@@ -37,16 +37,19 @@ try {
     repo
   });
   const latestTag = tagsList?.[0];
+  console.log({
+    latestTag
+  });
   const latestVersion = latestTag?.name ?? DEFAULT_VERSION;
 
   if (!valid(latestVersion)) {
     throw new Error("Latest tag version is not valid, check git tags");
   }
 
-  const nextVersion = inc(coerce(latestVersion) as SemVer, releaseType);
+  const nextTag = inc(coerce(latestVersion) as SemVer, releaseType);
 
   console.log({
-    nextVersion
+    nextTag
   });
 
   /* Branch validation */
@@ -67,7 +70,6 @@ try {
 
   // git merge-base
   // TODO check branches HEADs are not the same
-  // TODO check source branch HEAD is ahead of target branch HEAD
   // TODO check source branch HEAD does not have tag
 
   console.log({
@@ -85,9 +87,6 @@ try {
   if (compareCommitsResponse.data.status !== "behind") {
     throw new Error(`${targetBranch} branch is not behind ${sourceBranch}`);
   }
-  throw new Error(`${targetBranch} branch is not behind ${sourceBranch}`);
-
-  console.log("should exit");
 
   // get tag for a commit sha
   console.log(compareCommitsResponse);
