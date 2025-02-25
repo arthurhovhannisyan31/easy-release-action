@@ -24,7 +24,7 @@ export const validateBranchesMerge = async (
 
   /* Merge validation */
   if (compareCommitsResponse.data.status !== "behind") {
-    throw new Error(`${base} branch is not behind ${head}`);
+    throw new Error(`${base} branch is not behind ${head}. Observe branches for merge-conflicts or need for rebase.`);
   }
 };
 
