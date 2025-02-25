@@ -53,22 +53,16 @@ try {
     branch: sourceBranchName
   });
 
-  console.log({
-    targetBranch,
-    sourceBranch
-  });
-
   const nextTagVersion = await getNextTagVersion(
     octokit,
     sourceBranch,
     releaseType
   );
 
+  core.setOutput("released_tag", nextTagVersion);
+
   // merge branches
   // dev -> master, master -> dev
-
-  // at last
-  core.setOutput("released_tag", nextTagVersion);
 
   // create release - separate action
   // post message to slack - separate action
