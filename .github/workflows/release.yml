@@ -1,0 +1,34 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Semantic release type"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Easy release call
+        id: easy-release
+        uses: arthurhovhannisyan31/easy-release-action@develop
+        env:
+          PAT: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          source_branch: "develop"
+          target_branch: "main"
+          release_type: ${{ inputs.release_type }}
+      - name: Log outputs
+        run: |
+          echo ${{ steps.easy-release.outputs.release_tag }}
+          echo ${{ steps.easy-release.outputs.release_url }}
+
