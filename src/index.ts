@@ -10,7 +10,7 @@ try {
     throw new Error("Failed reading access token");
   }
 
-  const sourceBranchName = core.getInput("source_branch", { required: true });
+  const sourceBranchName = core.getInput("branch", { required: true });
 
   const octokit = github.getOctokit(PAT);
 
