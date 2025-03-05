@@ -22,7 +22,7 @@ jobs:
         id: easy-merge
         uses: arthurhovhannisyan31/easy-merge-action@develop
         env:
-          PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           source_branch: "develop"
           target_branch: "main"
@@ -31,11 +31,12 @@ jobs:
         id: easy-release
         uses: arthurhovhannisyan31/easy-release-action@develop
         env:
-          PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           branch: "main"
       - name: Log outputs
         run: |
-          echo ${{ steps.easy-merge.outputs.release_tag }}
-          echo ${{ steps.easy-release.outputs.release_url }}
+          echo Released tag: ${{ steps.easy-merge.outputs.release_tag }}
+          echo Releasee URL: ${{ steps.easy-release.outputs.release_url }}
 
