@@ -1,18 +1,21 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { WebClient } from "@slack/web-api";
 
 import { createRelease } from "./helpers";
 
 try {
-  const PAT = process.env.PAT;
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
 
-  if (!PAT) {
+  if (!GITHUB_TOKEN || !SLACK_BOT_TOKEN) {
     throw new Error("Failed reading access token");
   }
 
   const sourceBranchName = core.getInput("branch", { required: true });
 
-  const octokit = github.getOctokit(PAT);
+  const octokit = github.getOctokit(GITHUB_TOKEN);
+  const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
   const {
     owner,
@@ -40,7 +43,14 @@ try {
 
   core.setOutput("release_url", release.html_url);
 
-  // send slack message
+  const result = await slackClient.chat.postMessage({
+    text: `[Release: ${release.name}](${release.html_url}) is ready!`,
+    channel: "C08FQ3B8P3K",
+  });
+
+  console.log({
+    result
+  });
 } catch (error: unknown) {
   core.setFailed((error as Error).message);
 }
