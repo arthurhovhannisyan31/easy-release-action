@@ -36,6 +36,6 @@ jobs:
           branch: "main"
       - name: Log outputs
         run: |
-          echo ${{ steps.easy-merge.outputs.release_tag }}
-          echo ${{ steps.easy-release.outputs.release_url }}
+          echo Released tag: ${{ steps.easy-merge.outputs.release_tag }}
+          echo Releasee URL: ${{ steps.easy-release.outputs.release_url }}
 
