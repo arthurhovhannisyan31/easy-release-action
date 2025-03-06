@@ -40,11 +40,16 @@ try {
     previousTag,
     latestTag
   );
-  core.info(`✔ Release ${release.name} created`);
   core.setOutput("release_url", release.html_url);
 
   const result = await slackClient.chat.postMessage({
     blocks: [{
+      type: "header",
+      text: {
+        type: "plain_text",
+        text: "Release created:"
+      }
+    }, {
       type: "section",
       text: {
         type: "mrkdwn",
