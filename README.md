@@ -1,4 +1,4 @@
-# easy-release-action
+# Easy release action
 
 ## Description
 
