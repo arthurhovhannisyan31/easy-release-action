@@ -1,3 +1,4 @@
+import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 import type {
@@ -55,6 +56,8 @@ export const createRelease = async (
     name: `Release ${releaseNotes.name}`,
     body: `${commitsNotes}\n\n${releaseNotes.body}`
   });
+
+  core.info(`✔ Release ${release.name} created`);
 
   return release;
 };
