@@ -7,8 +7,9 @@ import { createRelease } from "./helpers";
 try {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
+  const SLACK_CHANNEL = process.env.SLACK_CHANNEL;
 
-  if (!GITHUB_TOKEN || !SLACK_BOT_TOKEN) {
+  if (!GITHUB_TOKEN || !SLACK_BOT_TOKEN || !SLACK_CHANNEL) {
     throw new Error("Failed reading access token");
   }
 
@@ -56,7 +57,7 @@ try {
         text: `<${release.html_url}|${release.name}> is ready!`,
       }
     }],
-    channel: "C08FQ3B8P3K",
+    channel: SLACK_CHANNEL,
   });
   core.info(`✔ Slack message posted: ${result.message?.text}`);
 } catch (error: unknown) {
