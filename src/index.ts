@@ -46,6 +46,7 @@ try {
   const result = await slackClient.chat.postMessage({
     text: `[Release: ${release.name}](${release.html_url}) is ready!`,
     channel: "C08FQ3B8P3K",
+    mrkdwn: true
   });
 
   console.log({
