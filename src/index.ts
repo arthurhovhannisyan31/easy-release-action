@@ -40,7 +40,7 @@ try {
     previousTag,
     latestTag
   );
-
+  core.info(`✔ Release ${release.name} created`);
   core.setOutput("release_url", release.html_url);
 
   const result = await slackClient.chat.postMessage({
@@ -48,15 +48,12 @@ try {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `<${release.html_url}|Release: ${release.name}> is ready!`,
+        text: `<${release.html_url}|${release.name}> is ready!`,
       }
     }],
     channel: "C08FQ3B8P3K",
   });
-
-  console.log({
-    result
-  });
+  core.info(`✔ Slack message posted: ${result.message?.text}`);
 } catch (error: unknown) {
   core.setFailed((error as Error).message);
 }
