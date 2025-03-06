@@ -44,7 +44,13 @@ try {
   core.setOutput("release_url", release.html_url);
 
   const result = await slackClient.chat.postMessage({
-    text: `[Release: ${release.name}](${release.html_url}) is ready!`,
+    blocks: [{
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `<${release.html_url}|Release: ${release.name}> is ready!`,
+      }
+    }],
     channel: "C08FQ3B8P3K",
   });
 
