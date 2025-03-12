@@ -15,5 +15,10 @@ sent to a Slack channel with link to created release.
 
 `SLACK_CHANNEL` - Slack channel id to post messages to
 
+## Flow
+1. Collect commits between latest two tags range.
+2. Generate release with formatted message.
+3. Post release notification to Slack channel.
+
 ## Usage
 Please see the [release workflow](.github/workflows/release.yml) as a usage example.
