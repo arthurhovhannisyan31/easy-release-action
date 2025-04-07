@@ -8,12 +8,12 @@ sent to a Slack channel with link to created release.
 ## Inputs
 `branch` - the released branch with commits history.
 
+`slack-channel`(optional) - Slack channel to post message to.  
+
 ## Env
 `GITHUB_TOKEN` - automatically generated token for workflow.
 
 `SLACK_BOT_TOKEN` - Slack bot token generated for installed Slack app
-
-`SLACK_CHANNEL` - Slack channel id to post messages to
 
 ## Flow
 1. Collect commits between latest two tags range.

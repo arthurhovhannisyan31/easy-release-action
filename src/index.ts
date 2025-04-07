@@ -7,13 +7,13 @@ import { createRelease } from "./helpers";
 try {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-  const SLACK_CHANNEL = process.env.SLACK_CHANNEL;
 
-  if (!GITHUB_TOKEN || !SLACK_BOT_TOKEN || !SLACK_CHANNEL) {
-    throw new Error("Failed reading access token");
+  if (!GITHUB_TOKEN || !SLACK_BOT_TOKEN) {
+    throw new Error("Failed reading required tokens");
   }
 
   const sourceBranchName = core.getInput("branch", { required: true });
+  const slackChannel = core.getInput("slack-channel", { required: false });
 
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const slackClient = new WebClient(SLACK_BOT_TOKEN);
@@ -43,23 +43,26 @@ try {
   );
   core.setOutput("release_url", release.html_url);
 
-  const result = await slackClient.chat.postMessage({
-    blocks: [{
-      type: "header",
-      text: {
-        type: "plain_text",
-        text: "Release created:"
-      }
-    }, {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: `<${release.html_url}|${release.name}> is ready!`,
-      }
-    }],
-    channel: SLACK_CHANNEL,
-  });
-  core.info(`✔ Slack message posted: ${result.message?.text}`);
+  if (slackChannel) {
+    const result = await slackClient.chat.postMessage({
+      blocks: [{
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: "Release created:"
+        }
+      }, {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `<${release.html_url}|${release.name}> is ready!`,
+        }
+      }],
+      channel: slackChannel,
+    });
+
+    core.info(`✔ Slack message posted: ${result.message?.text}`);
+  }
 } catch (error: unknown) {
   core.setFailed((error as Error).message);
 }
