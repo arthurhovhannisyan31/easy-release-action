@@ -13,7 +13,7 @@ try {
   }
 
   const sourceBranchName = core.getInput("branch", { required: true });
-  const slackChannel = core.getInput("slack-channel", { required: false });
+  const slackChannel = core.getInput("slack_channel", { required: false });
 
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const slackClient = new WebClient(SLACK_BOT_TOKEN);
