@@ -18,9 +18,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: log
-        run: |
-          echo ${{ env.SLACK_CHANNEL }}
       - name: Easy merge
         id: easy-merge
         uses: arthurhovhannisyan31/easy-merge-action@develop
@@ -38,7 +35,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           branch: "main"
-          slack_channel: ${{ env.SLACK_CHANNEL }}
+          slack_channel: ${{ vars.SLACK_CHANNEL }}
       - name: Log outputs
         run: |
           echo Released tag: ${{ steps.easy-merge.outputs.release_tag }}
