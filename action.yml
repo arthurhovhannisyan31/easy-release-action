@@ -5,9 +5,6 @@ inputs:
     description: "Released branch with commits history"
     default: "main"
     required: true
-  slack_channel:
-    description: "Slack channel to post message to"
-    type: string
 outputs:
   release_url:
     description: "Link to release HTML"
