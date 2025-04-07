@@ -13,7 +13,7 @@ try {
   }
 
   const sourceBranchName = core.getInput("branch", { required: true });
-  const slackChannel = core.getInput("slack_channel", { required: false });
+  const SLACK_CHANNEL = process.env.SLACK_CHANNEL;
 
   const octokit = github.getOctokit(GITHUB_TOKEN);
   const slackClient = new WebClient(SLACK_BOT_TOKEN);
@@ -43,7 +43,7 @@ try {
   );
   core.setOutput("release_url", release.html_url);
 
-  if (slackChannel) {
+  if (SLACK_CHANNEL) {
     const result = await slackClient.chat.postMessage({
       blocks: [{
         type: "header",
@@ -58,7 +58,7 @@ try {
           text: `<${release.html_url}|${release.name}> is ready!`,
         }
       }],
-      channel: slackChannel,
+      channel: SLACK_CHANNEL,
     });
 
     core.info(`✔ Slack message posted: ${result.message?.text}`);
