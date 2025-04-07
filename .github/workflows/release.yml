@@ -18,6 +18,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: log
+        run: |
+          echo ${{ env.SLACK_CHANNEL }}
       - name: Easy merge
         id: easy-merge
         uses: arthurhovhannisyan31/easy-merge-action@develop
