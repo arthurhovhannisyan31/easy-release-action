@@ -1,4 +1,4 @@
-name: "Easy release"
+name: "Easy release action"
 description: "Merge branches and publish release in one click"
 inputs:
   branch:
