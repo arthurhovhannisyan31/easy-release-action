@@ -1,9 +1,16 @@
+<div align="center">
+  <h1><code>easy-release-action</code></h1>
+</div>
+
+
 # Easy release action
 
 ## Description
 
-Action creates a release with commits comments between two latest tags. A formatted message is 
-sent to a Slack channel with link to created release.
+Easy Release Action is a GitHub Action that creates a release by collecting commit messages between the 
+latest two tags on a given branch. It generates a formatted release message and posts it to a Slack channel. 
+It requires GITHUB_TOKEN, and optionally SLACK_BOT_TOKEN and SLACK_CHANNEL. 
+Example usage is available in the release workflow.
 
 ## Inputs
 `branch` - the released branch with commits history
@@ -11,7 +18,7 @@ sent to a Slack channel with link to created release.
 ## Env
 `GITHUB_TOKEN` - automatically generated token for workflow
 
-`SLACK_BOT_TOKEN` - Slack bot token generated for installed Slack app
+`SLACK_BOT_TOKEN`(optional) - Slack bot token generated for installed Slack app
 
 `SLACK_CHANNEL`(optional) - Slack channel id to post messages to
 
