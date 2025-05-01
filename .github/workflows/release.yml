@@ -1,4 +1,4 @@
-name: Release
+name: Easy release
 on:
   workflow_dispatch:
     inputs:
@@ -8,27 +8,35 @@ on:
         default: "patch"
         type: choice
         options:
-          - major
-          - minor
           - patch
+          - minor
+          - major
 jobs:
-  merge:
+  main:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Easy release call
-        id: easy-release
-        uses: arthurhovhannisyan31/easy-release-action@develop
+      - name: Easy merge
+        id: easy-merge
+        uses: arthurhovhannisyan31/easy-merge-action@develop
         env:
-          PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           source_branch: "develop"
           target_branch: "main"
           release_type: ${{ inputs.release_type }}
+      - name: Easy release
+        id: easy-release
+        uses: arthurhovhannisyan31/easy-release-action@develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+        with:
+          branch: "main"
       - name: Log outputs
         run: |
-          echo ${{ steps.easy-release.outputs.release_tag }}
-          echo ${{ steps.easy-release.outputs.release_url }}
-
+          echo Released tag: ${{ steps.easy-merge.outputs.release_tag }}
+          echo Releasee URL: ${{ steps.easy-release.outputs.release_url }}
