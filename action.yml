@@ -1,26 +1,11 @@
-name: "Easy release"
+name: "Easy release action"
 description: "Merge branches and publish release in one click"
 inputs:
-  source_branch:
-    description: "Feature branch to be merged with target branch"
-    default: "develop"
+  branch:
+    description: "Released branch with commits history"
+    default: "main"
     required: true
-  target_branch:
-    description: "Branch to merge features from source branch"
-    default: main
-    required: true
-  release_type:
-    description: "Semantic release type"
-    required: true
-    default: "patch"
-    type: choice
-    options:
-      - major
-      - minor
-      - patch
 outputs:
-  release_tag:
-    description: "Released version tag value v#.#.#"
   release_url:
     description: "Link to release HTML"
 runs:
