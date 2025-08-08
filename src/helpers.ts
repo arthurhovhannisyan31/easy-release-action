@@ -36,16 +36,12 @@ export const createRelease = async (
 
   const commitsNotes = filteredCommits.map(({
     commit,
-    author
-  }) => `${author?.login} ${commit.message}`).join("\n");
+    author,
+  }) => {
+    const firstLine = commit.message.split("\n")[0];
 
-  const {
-    data: releaseNotes
-  } = await octokit.rest.repos.generateReleaseNotes({
-    owner,
-    repo,
-    tag_name: latestTag.name,
-  });
+    return `- ${firstLine} by @${author?.login}`;
+  }).join("\n");
 
   const {
     data: release
@@ -53,8 +49,8 @@ export const createRelease = async (
     owner,
     repo,
     tag_name: latestTag.name,
-    name: `Release ${releaseNotes.name}`,
-    body: `${commitsNotes}\n\n${releaseNotes.body}`
+    name: latestTag.name,
+    body: commitsNotes
   });
 
   core.info(`✔ Release ${release.name} created`);
