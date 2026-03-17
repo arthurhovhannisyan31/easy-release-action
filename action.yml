@@ -9,5 +9,5 @@ outputs:
   release_url:
     description: "Link to release HTML"
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"
